@@ -2,8 +2,9 @@ package entities;
 
 import java.util.Scanner;
 // TRATAR ERRO NA LINHA 68
-public class RoupaPMG implements Item{
-
+public class RoupaPMG implements Item{	
+	static Scanner entrada = new Scanner(System.in);
+	
 	private String descricao;
 	private int estoqueMinimo;
 	private int estoqueMaximo;
@@ -69,17 +70,15 @@ public class RoupaPMG implements Item{
 
 	@Override
 	public void venda() {
-
-		Scanner entrada = new Scanner(System.in);
 		System.out.println("Qual o tamanho do item? (P,M,G).");
-		String tamanhoDoItem = entrada.nextLine().toLowerCase().trim();
-		if(tamanhoDoItem.charAt(0) == 'p') {
+		char tamanhoDoItem = entrada.next().charAt(0);
+		if(tamanhoDoItem == 'p' || tamanhoDoItem == 'P') {
 			System.out.println("Uma roupa tamanhoa P foi vendida.");
 			this.quantidadeP--;
-		} else if (tamanhoDoItem.charAt(0) == 'm') {
+		} else if (tamanhoDoItem == 'm' || tamanhoDoItem == 'M') {
 			System.out.println("Uma roupa tamanhoa M foi vendida.");
 			this.quantidadeM--;
-		} else if (tamanhoDoItem.charAt(0) == 'g'){
+		} else if (tamanhoDoItem == 'g' || tamanhoDoItem == 'G'){
 			System.out.println("Uma roupa tamanhoa G foi vendida.");
 			this.quantidadeG--;
 		} else {
@@ -87,22 +86,32 @@ public class RoupaPMG implements Item{
 			System.out.println("Tamanho informado inexistente.");
 		}
 
-		entrada.close();
-
 	}
 
 	@Override
 	public void reposicaoEstoque() {
+		System.out.println("Seu estoque atual: ");
+		System.out.println("Tamanho P: " + this.quantidadeP);
+		System.out.println("Tamanho M: " + this.quantidadeM);
+		System.out.println("Tamanho G: " + this.quantidadeG);
+
 		if(this.getQuantidadeP() < this.estoqueMinimo) {
+			System.out.println("Repondo as peças tamanho P:");
 			this.quantidadeP = this.estoqueMaximo;
+
 		}
 		if(this.getQuantidadeM() < this.estoqueMinimo) {
+			System.out.println("Repondo as peças tamanho M:");
 			this.quantidadeM = this.estoqueMaximo;
 		}
 		if(this.getQuantidadeG() < this.estoqueMinimo) {
+			System.out.println("Repondo as peças tamanho G:");
 			this.quantidadeG = this.estoqueMaximo;
 		}
-
+		System.out.println("Estoque atualizado:");
+		System.out.println("Tamanho P: " + this.quantidadeP);
+		System.out.println("Tamanho M: " + this.quantidadeM);
+		System.out.println("Tamanho G: " + this.quantidadeG);
 	}
 
 	@Override
@@ -113,8 +122,6 @@ public class RoupaPMG implements Item{
 
 	@Override
 	public int obterQuantidadeEmEstoque() {
-		@SuppressWarnings("resource")
-		Scanner entrada = new Scanner(System.in);
 		System.out.println("Deseja obter qual tamanho? [ P/M/G ]");
 		String tamanho = entrada.nextLine().toLowerCase().trim();
 		if(tamanho.charAt(0) == 'p') {
