@@ -1,10 +1,10 @@
 package application;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import entities.Acessorio;
 import entities.Item;
-import entities.Peca;
 import entities.RoupaPMG;
 import entities.RoupaTamanhoUnico;
 
@@ -12,15 +12,45 @@ public class ControleDeEstoqueApp {
 
 	public static void main(String[] args) {
 		Scanner entrada = new Scanner(System.in);
-		Item[] vect = new Item[5];
-		vect[0] = new Acessorio("Machado", 10, 5, 20);
-		vect[1] = new Acessorio("Katana", 10, 5, 20);
-		vect[2] = new RoupaTamanhoUnico("Kimono", 10, 5, 100);
-		vect[3] = new RoupaPMG("Camisa de força", 5, 15, 10, 10, 10);
-		vect[4] = new RoupaPMG("Armadura medieval", 5, 15, 10, 10, 10);
+		Integer escolha = -5;
 
-		System.out.println(vect[3].obterQuantidadeEmEstoque());
+		Item[] itens = new Item[5];
 
+		itens[0] = new Acessorio("Machado de Batalha",10,5,15); //(Nome, Qtdestoq EstqMin, EstqMax);
+		itens[1] = new Acessorio("Anel de Sauron",10,5,15);
+		itens[2] = new RoupaTamanhoUnico("Cota de Lâminas",10,5,15);
+		itens[3] = new RoupaTamanhoUnico("Armadura de Viking",10,5,15);
+		itens[4] = new RoupaPMG("Capa de Invisibilidade",5,10,10,10,10);
+
+
+		System.out.println("Bem vindo a Taverna do Dragão. Escolha qual item deseja comprar, ou tecle"
+				+ " 5 para sair.");
+
+		try {
+			do {
+				for(int i = 0; i < itens.length; i++) {
+					System.out.println(i + " - " + itens[i].obterDescricaoDoProduto());
+				}
+				System.out.println("5 - Sair da taverna.");
+				escolha = entrada.nextInt();
+				if(escolha >= 0 && escolha <= 4) {
+					itens[escolha].venda();
+					itens[escolha].reposicaoEstoque();
+				} else {
+
+				}
+
+			} while(escolha!=5);
+		} catch(InputMismatchException e) {
+			System.out.println("Erro de input. Era esperado um número inteiro.");
+
+		}			
+
+		System.out.println("A Taverna do Dragão agradece a preferência. Boas aventuras, volte sempre.");
+		System.out.println("          )                         *");
+		System.out.println("        o = --->            [  /o\\ /");
+		System.out.println("        | )		    | : | /");
+		System.out.println("       / \\		    [  / \\");
 
 		entrada.close();
 	}
